@@ -2,7 +2,9 @@
 
 Un SDK ligero y personalizable para integrar un chatbot moderno en cualquier sitio web. Con diseño minimalista, animaciones suaves y soporte para streaming de respuestas.
 
-[![Demo Interactiva](https://img.shields.io/badge/🚀_Ver-Demo_Interactiva-blue?style=for-the-badge)](index.html)
+[![Demo Interactiva](https://img.shields.io/badge/🚀_Ver-Demo_Interactiva-blue?style=for-the-badge)](https://dgarcia7.github.io/chatbot-sdk/)
+
+> **💡 Ver la demo localmente:** Abre el archivo `index.html` directamente en tu navegador o usa `python -m http.server` / `npx serve` en el directorio del proyecto.
 
 ## ✨ Características
 
@@ -627,6 +629,44 @@ Si encuentras algún problema o tienes preguntas:
 ## 🙏 Agradecimientos
 
 Gracias a todos los que han contribuido a este proyecto.
+
+## 🌐 Publicar la Demo con GitHub Pages
+
+Para que el botón de demo funcione en tu repositorio:
+
+1. **Sube tu proyecto a GitHub**:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/dgarcia7/chatbot-sdk.git
+   git push -u origin main
+   ```
+
+2. **Activa GitHub Pages**:
+   - Ve a tu repositorio en GitHub
+   - Click en **Settings** (Configuración)
+   - En el menú lateral, click en **Pages**
+   - En **Source**, selecciona la rama `main` y carpeta `/ (root)`
+   - Click en **Save**
+   - Espera unos minutos y tu demo estará disponible en: `https://dgarcia7.github.io/chatbot-sdk/`
+
+3. **Ver la demo localmente** (sin necesidad de servidor):
+   ```bash
+   # Opción 1: Abrir directamente
+   # Simplemente haz doble clic en index.html
+   
+   # Opción 2: Con Python
+   python -m http.server 8000
+   # Abre http://localhost:8000
+   
+   # Opción 3: Con Node.js
+   npx serve
+   # Abre la URL que muestra
+   
+   # Opción 4: Con PHP
+   php -S localhost:8000
+   ```
 
 ---
 
