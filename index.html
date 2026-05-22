@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <title>Test Chatbot</title>
 </head>
@@ -9,19 +9,90 @@
 
 <script src="./sdk/chatbot.js"></script>
 <script>
-  ChatBot.init({
-    title: "Chat de Soporte",
-    subtitle: "Equipo de soporte",
-    botName: "LISA",
-    botAvatar: "https://play-lh.googleusercontent.com/kDuudtNDenxb8k66YGU61mFDGRAsgqish8PFIpLLWRIHagjTKixxjGk5uxQWt50fmgk", // URL de la imagen o null
-    placeholder: "Escribe tu mensaje...",
-    welcomeMessage: "¡Hola! ¿En qué podemos ayudarte hoy?",
-    color: "#2a66f0",
-    apiUrl: "https://tu-api.com/chat",
-    apiKey: "tu-api-key",
+  let currentChatBot = null;
+  const defaultConfig = `ChatBot.init({
+  title: "Chat de Soporte",
+  subtitle: "Equipo de soporte",
+  botName: "LISA",
+  botAvatar: "https://play-lh.googleusercontent.com/kDuudtNDenxb8k66YGU61mFDGRAsgqish8PFIpLLWRIHagjTKixxjGk5uxQWt50fmgk",
+  placeholder: "Escribe tu mensaje...",
+  welcomeMessage: "¡Hola! ¿En qué podemos ayudarte hoy?",
+  color: "#2a66f0",
+  apiUrl: "https://tu-api.com/chat",
+  apiKey: "tu-api-key",
+  userName: "Daniel García"
+});`;
 
-    userName: "Daniel García"
+  const configEditor = document.getElementById('configEditor');
+  const applyBtn = document.getElementById('applyBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const successMsg = document.getElementById('successMsg');
+
+  // Inicializar con configuración por defecto
+  initializeChatBot(defaultConfig);
+
+  applyBtn.addEventListener('click', () => {
+    const code = configEditor.value;
+    initializeChatBot(code);
   });
+
+  resetBtn.addEventListener('click', () => {
+    configEditor.value = defaultConfig;
+    initializeChatBot(defaultConfig);
+  });
+
+  // Permitir aplicar con Ctrl+Enter o Cmd+Enter
+  configEditor.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      const code = configEditor.value;
+      initializeChatBot(code);
+    }
+  });
+
+  function initializeChatBot(code) {
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
+
+    try {
+      // Remover el chatbot anterior si existe
+      if (currentChatBot) {
+        const oldButton = document.querySelector('.cb-button');
+        const oldChat = document.querySelector('.cb-chat');
+        if (oldButton) oldButton.remove();
+        if (oldChat) oldChat.remove();
+      }
+
+      // Extraer el objeto de configuración del código
+      const configMatch = code.match(/ChatBot\.init\s*\(\s*(\{[\s\S]*\})\s*\)/);
+      if (!configMatch) {
+        throw new Error('No se encontró una configuración válida. Asegúrate de usar el formato: ChatBot.init({ ... })');
+      }
+
+      // Evaluar la configuración de forma segura
+      const configStr = configMatch[1];
+      const config = eval(`(${configStr})`);
+
+      // Validar que config sea un objeto
+      if (typeof config !== 'object' || config === null) {
+        throw new Error('La configuración debe ser un objeto válido');
+      }
+
+      // Crear nuevo chatbot
+      currentChatBot = ChatBot.init(config);
+
+      // Mostrar mensaje de éxito
+      successMsg.style.display = 'block';
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 3000);
+
+    } catch (error) {
+      errorMsg.textContent = `❌ Error: ${error.message}`;
+      errorMsg.style.display = 'block';
+      console.error('Error al inicializar el chatbot:', error);
+    }
+  }
 </script>
 
 </body>
