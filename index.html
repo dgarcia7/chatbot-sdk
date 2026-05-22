@@ -12,7 +12,7 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', 'Arial', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', 'Arial', 'Helvetica Neue', sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       padding: 20px;
@@ -276,18 +276,20 @@
 <script src="./sdk/chatbot.js"></script>
 <script>
   let currentChatBot = null;
-  const defaultConfig = `ChatBot.init({
-  title: "Asistente Virtual Nova",
-  subtitle: "En línea • Responde en segundos",
-  botName: "Nova AI",
-  botAvatar: "https://i.pinimg.com/474x/be/f2/aa/bef2aad7a1e299b87eefea11756b16df.jpg",
-  placeholder: "Pregúntame lo que necesites...",
-  welcomeMessage: "👋 ¡Hola! Soy Nova, tu asistente virtual.\n\n¿En qué puedo ayudarte hoy?",
-  color: "#8b5cf6",
-  apiUrl: "https://api.miempresa.com/chatbot/v1",
-  apiKey: "sk_live_abc123xyz789",
-  userName: "María González"
-});`;
+  
+  // Configuración por defecto como objeto
+  const defaultConfigObj = {
+    title: "Asistente Virtual Nova",
+    subtitle: "En línea • Responde en segundos",
+    botName: "Nova AI",
+    botAvatar: "https://i.pinimg.com/474x/be/f2/aa/bef2aad7a1e299b87eefea11756b16df.jpg",
+    placeholder: "Pregúntame lo que necesites...",
+    welcomeMessage: "👋 ¡Hola! Soy Nova, tu asistente virtual.\n\n¿En qué puedo ayudarte hoy?",
+    color: "#8b5cf6",
+    apiUrl: "https://api.miempresa.com/chatbot/v1",
+    apiKey: "sk_live_abc123xyz789",
+    userName: "María González"
+  };
 
   const configEditor = document.getElementById('configEditor');
   const applyBtn = document.getElementById('applyBtn');
@@ -296,17 +298,28 @@
   const successMsg = document.getElementById('successMsg');
   const keepOpenCheck = document.getElementById('keepOpenCheck');
 
-  // Inicializar con configuración por defecto
-  initializeChatBot(defaultConfig);
+  // Inicializar con configuración por defecto automáticamente
+  currentChatBot = ChatBot.init(defaultConfigObj);
 
   applyBtn.addEventListener('click', () => {
     const code = configEditor.value;
-    initializeChatBot(code);
+    applyConfiguration(code);
   });
 
   resetBtn.addEventListener('click', () => {
-    configEditor.value = defaultConfig;
-    initializeChatBot(defaultConfig);
+    // Resetear a configuración por defecto
+    if (currentChatBot) {
+      const oldButton = document.querySelector('.cb-button');
+      const oldChat = document.querySelector('.cb-chat');
+      if (oldButton) oldButton.remove();
+      if (oldChat) oldChat.remove();
+    }
+    currentChatBot = ChatBot.init(defaultConfigObj);
+    successMsg.textContent = '✓ Configuración reseteada';
+    successMsg.style.display = 'block';
+    setTimeout(() => {
+      successMsg.style.display = 'none';
+    }, 2000);
   });
 
   // Permitir aplicar con Ctrl+Enter o Cmd+Enter
@@ -314,11 +327,11 @@
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
       const code = configEditor.value;
-      initializeChatBot(code);
+      applyConfiguration(code);
     }
   });
 
-  function initializeChatBot(code) {
+  function applyConfiguration(code) {
     errorMsg.style.display = 'none';
     successMsg.style.display = 'none';
 
@@ -350,6 +363,7 @@
       }
 
       // Mostrar mensaje de éxito
+      successMsg.textContent = '✓ Configuración aplicada';
       successMsg.style.display = 'block';
       setTimeout(() => {
         successMsg.style.display = 'none';
