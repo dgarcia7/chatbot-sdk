@@ -26,43 +26,35 @@
     .header {
       text-align: center;
       color: white;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
     .header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
 
     .header p {
-      font-size: 1.2rem;
+      font-size: 1rem;
       opacity: 0.9;
     }
 
     .demo-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-
-    @media (max-width: 1024px) {
-      .demo-container {
-        grid-template-columns: 1fr;
-      }
+      max-width: 900px;
+      margin: 0 auto 20px;
     }
 
     .panel {
       background: white;
       border-radius: 16px;
-      padding: 30px;
+      padding: 25px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
 
     .panel h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
       color: #333;
       display: flex;
       align-items: center;
@@ -71,24 +63,20 @@
 
     .panel h2::before {
       content: '⚙️';
-      font-size: 1.8rem;
-    }
-
-    .preview-panel h2::before {
-      content: '👁️';
+      font-size: 1.5rem;
     }
 
     .code-editor {
       width: 100%;
-      min-height: 450px;
-      padding: 20px;
+      min-height: 380px;
+      padding: 16px;
       font-family: 'Courier New', monospace;
-      font-size: 14px;
+      font-size: 13px;
       border: 2px solid #e5e7eb;
       border-radius: 12px;
       background: #f9fafb;
       resize: vertical;
-      line-height: 1.6;
+      line-height: 1.5;
       color: #1f2937;
     }
 
@@ -98,14 +86,21 @@
       background: white;
     }
 
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 15px;
+    }
+
     .button-group {
       display: flex;
       gap: 10px;
-      margin-top: 20px;
+      flex: 1;
     }
 
     .btn {
-      padding: 12px 24px;
+      padding: 10px 20px;
       font-size: 14px;
       font-weight: 600;
       border: none;
@@ -136,16 +131,35 @@
       background: #d1d5db;
     }
 
-    .preview-content {
-      min-height: 400px;
-      background: #f9fafb;
-      border-radius: 12px;
-      padding: 30px;
+    .toggle-container {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: #6b7280;
-      font-size: 14px;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      white-space: nowrap;
+      user-select: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-container:hover {
+      background: #e5e7eb;
+    }
+
+    .toggle-container input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .toggle-container label {
+      font-size: 13px;
+      color: #374151;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 0;
     }
 
     .error-message {
@@ -174,22 +188,23 @@
       background: #eff6ff;
       border: 1px solid #bfdbfe;
       border-radius: 8px;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 13px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 12px;
       color: #1e40af;
+      line-height: 1.6;
     }
 
     .info-box strong {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .footer {
       text-align: center;
       color: white;
-      padding: 20px;
-      font-size: 14px;
+      padding: 15px;
+      font-size: 13px;
       opacity: 0.8;
     }
 
@@ -210,56 +225,41 @@
 
 <div class="container">
   <div class="header">
-    <h1>🤖 Chatbot SDK</h1>
-    <p>Demo Interactiva - Prueba y configura tu chatbot en tiempo real</p>
+    <h1Configura y prueba tu chatbot en tiempo real</p>
   </div>
 
   <div class="demo-container">
-    <!-- Panel de Configuración -->
     <div class="panel">
       <h2>Configuración del Chatbot</h2>
       <textarea class="code-editor" id="configEditor">ChatBot.init({
-  title: "Chat de Soporte",
-  subtitle: "Equipo de soporte",
-  botName: "LISA",
-  botAvatar: "https://play-lh.googleusercontent.com/kDuudtNDenxb8k66YGU61mFDGRAsgqish8PFIpLLWRIHagjTKixxjGk5uxQWt50fmgk",
-  placeholder: "Escribe tu mensaje...",
-  welcomeMessage: "¡Hola! ¿En qué podemos ayudarte hoy?",
-  color: "#2a66f0",
-  apiUrl: "https://tu-api.com/chat",
-  apiKey: "tu-api-key",
-  userName: "Daniel García"
+  title: "Asistente Virtual Nova",
+  subtitle: "En línea • Responde en segundos",
+  botName: "Nova AI",
+  botAvatar: "https://i.pinimg.com/474x/be/f2/aa/bef2aad7a1e299b87eefea11756b16df.jpg",
+  placeholder: "Pregúntame lo que necesites...",
+  welcomeMessage: "👋 ¡Hola! Soy Nova, tu asistente virtual.\n\n¿En qué puedo ayudarte hoy?",
+  color: "#8b5cf6",
+  apiUrl: "https://api.miempresa.com/chatbot/v1",
+  apiKey: "sk_live_abc123xyz789",
+  userName: "María González"
 });</textarea>
 
-      <div class="button-group">
-        <button class="btn btn-primary" id="applyBtn">🚀 Aplicar Configuración</button>
-        <button class="btn btn-secondary" id="resetBtn">↺ Reset</button>
+      <div class="controls">
+        <div class="button-group">
+          <button class="btn btn-primary" id="applyBtn">🚀 Aplicar</button>
+          <button class="btn btn-secondary" id="resetBtn">↺ Reset</button>
+        </div>
+        <div class="toggle-container" onclick="document.getElementById('keepOpenCheck').click()">
+          <input type="checkbox" id="keepOpenCheck" onclick="event.stopPropagation()">
+          <label for="keepOpenCheck">Mantener chat abierto</label>
+        </div>
       </div>
 
       <div class="error-message" id="errorMsg"></div>
-      <div class="success-message" id="successMsg">✓ Configuración aplicada correctamente</div>
+      <div class="success-message" id="successMsg">✓ Configuración aplicada</div>
 
       <div class="info-box">
-        <strong>💡 Prueba modificar:</strong>
-        <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
-          <li><code>title</code> y <code>subtitle</code> - Cambia los textos del header</li>
-          <li><code>color</code> - Cambia el color principal del chat</li>
-          <li><code>botName</code> - Nombre del asistente</li>
-          <li><code>welcomeMessage</code> - Mensaje de bienvenida</li>
-          <li><code>botAvatar</code> - URL de imagen del avatar</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Panel de Vista Previa -->
-    <div class="panel preview-panel">
-      <h2>Vista Previa</h2>
-      <div class="preview-content">
-        Haz clic en el botón flotante 💬 en la esquina inferior derecha para ver el chatbot en acción.
-      </div>
-      <div class="info-box">
-        <strong>ℹ️ Nota:</strong>
-        El chatbot aparece como un botón flotante en la esquina inferior derecha.
+        <strong>💡 Atajos:</strong> <code>Ctrl/Cmd + Enter</code> para aplicar • Haz clic en el botón flotante 💬 (esquina inferior derecha) para ver el chatrior derecha.
         Haz clic en él para abrir el chat y probar la configuración.
       </div>
     </div>
@@ -278,16 +278,16 @@
 <script>
   let currentChatBot = null;
   const defaultConfig = `ChatBot.init({
-  title: "Chat de Soporte",
-  subtitle: "Equipo de soporte",
-  botName: "LISA",
-  botAvatar: "https://play-lh.googleusercontent.com/kDuudtNDenxb8k66YGU61mFDGRAsgqish8PFIpLLWRIHagjTKixxjGk5uxQWt50fmgk",
-  placeholder: "Escribe tu mensaje...",
-  welcomeMessage: "¡Hola! ¿En qué podemos ayudarte hoy?",
-  color: "#2a66f0",
-  apiUrl: "https://tu-api.com/chat",
-  apiKey: "tu-api-key",
-  userName: "Daniel García"
+  title: "Asistente Virtual Nova",
+  subtitle: "En línea • Responde en segundos",
+  botName: "Nova AI",
+  botAvatar: "https://i.pinimg.com/474x/be/f2/aa/bef2aad7a1e299b87eefea11756b16df.jpg",
+  placeholder: "Pregúntame lo que necesites...",
+  welcomeMessage: "👋 ¡Hola! Soy Nova, tu asistente virtual.\n\n¿En qué puedo ayudarte hoy?",
+  color: "#8b5cf6",
+  apiUrl: "https://api.miempresa.com/chatbot/v1",
+  apiKey: "sk_live_abc123xyz789",
+  userName: "María González"
 });`;
 
   const configEditor = document.getElementById('configEditor');
@@ -310,8 +310,25 @@
   });
 
   // Permitir aplicar con Ctrl+Enter o Cmd+Enter
+  const keepOpenCheck = document.getElementById('keepOpenCheck');
+
+  // Inicializar con configuración por defecto
+  initializeChatBot(defaultConfig);
+
+  applyBtn.addEventListener('click', () => {
+    const code = configEditor.value;
+    initializeChatBot(code);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    configEditor.value = defaultConfig;
+    initializeChatBot(defaultConfig);
+  });
+
+  // Permitir aplicar con Ctrl+Enter o Cmd+Enter
   configEditor.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
       const code = configEditor.value;
       initializeChatBot(code);
     }
@@ -348,19 +365,18 @@
       // Crear nuevo chatbot
       currentChatBot = ChatBot.init(config);
 
+      // Abrir el chat automáticamente si está activada la opción
+      if (keepOpenCheck.checked) {
+        setTimeout(() => {
+          const chatButton = document.querySelector('.cb-button');
+          if (chatButton) {
+            chatButton.click();
+          }
+        }, 100);
+      }
+
       // Mostrar mensaje de éxito
       successMsg.style.display = 'block';
       setTimeout(() => {
         successMsg.style.display = 'none';
-      }, 3000);
-
-    } catch (error) {
-      errorMsg.textContent = `❌ Error: ${error.message}`;
-      errorMsg.style.display = 'block';
-      console.error('Error al inicializar el chatbot:', error);
-    }
-  }
-</script>
-
-</body>
-</html>
+      }, 2
