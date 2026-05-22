@@ -1,11 +1,278 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Test Chatbot</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot SDK - Demo Interactiva</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .demo-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .demo-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .panel h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel h2::before {
+      content: '⚙️';
+      font-size: 1.8rem;
+    }
+
+    .preview-panel h2::before {
+      content: '👁️';
+    }
+
+    .code-editor {
+      width: 100%;
+      min-height: 450px;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      background: #f9fafb;
+      resize: vertical;
+      line-height: 1.6;
+      color: #1f2937;
+    }
+
+    .code-editor:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+      flex: 1;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    .preview-content {
+      min-height: 400px;
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 14px;
+      border-left: 4px solid #c33;
+      display: none;
+    }
+
+    .success-message {
+      background: #efe;
+      color: #3c3;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 14px;
+      border-left: 4px solid #3c3;
+      display: none;
+    }
+
+    .info-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #1e40af;
+    }
+
+    .info-box strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    code {
+      background: rgba(0,0,0,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Mi página</h1>
+<div class="container">
+  <div class="header">
+    <h1>🤖 Chatbot SDK</h1>
+    <p>Demo Interactiva - Prueba y configura tu chatbot en tiempo real</p>
+  </div>
+
+  <div class="demo-container">
+    <!-- Panel de Configuración -->
+    <div class="panel">
+      <h2>Configuración del Chatbot</h2>
+      <textarea class="code-editor" id="configEditor">ChatBot.init({
+  title: "Chat de Soporte",
+  subtitle: "Equipo de soporte",
+  botName: "LISA",
+  botAvatar: "https://play-lh.googleusercontent.com/kDuudtNDenxb8k66YGU61mFDGRAsgqish8PFIpLLWRIHagjTKixxjGk5uxQWt50fmgk",
+  placeholder: "Escribe tu mensaje...",
+  welcomeMessage: "¡Hola! ¿En qué podemos ayudarte hoy?",
+  color: "#2a66f0",
+  apiUrl: "https://tu-api.com/chat",
+  apiKey: "tu-api-key",
+  userName: "Daniel García"
+});</textarea>
+
+      <div class="button-group">
+        <button class="btn btn-primary" id="applyBtn">🚀 Aplicar Configuración</button>
+        <button class="btn btn-secondary" id="resetBtn">↺ Reset</button>
+      </div>
+
+      <div class="error-message" id="errorMsg"></div>
+      <div class="success-message" id="successMsg">✓ Configuración aplicada correctamente</div>
+
+      <div class="info-box">
+        <strong>💡 Prueba modificar:</strong>
+        <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+          <li><code>title</code> y <code>subtitle</code> - Cambia los textos del header</li>
+          <li><code>color</code> - Cambia el color principal del chat</li>
+          <li><code>botName</code> - Nombre del asistente</li>
+          <li><code>welcomeMessage</code> - Mensaje de bienvenida</li>
+          <li><code>botAvatar</code> - URL de imagen del avatar</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Panel de Vista Previa -->
+    <div class="panel preview-panel">
+      <h2>Vista Previa</h2>
+      <div class="preview-content">
+        Haz clic en el botón flotante 💬 en la esquina inferior derecha para ver el chatbot en acción.
+      </div>
+      <div class="info-box">
+        <strong>ℹ️ Nota:</strong>
+        El chatbot aparece como un botón flotante en la esquina inferior derecha.
+        Haz clic en él para abrir el chat y probar la configuración.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>
+    Chatbot SDK v1.0.0 | 
+    <a href="https://github.com/dgarcia7/chatbot-sdk" target="_blank">GitHub</a> |
+    <a href="README.md" target="_blank">Documentación</a>
+  </p>
+</div>
 
 <script src="./sdk/chatbot.js"></script>
 <script>
