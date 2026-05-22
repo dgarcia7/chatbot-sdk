@@ -259,8 +259,7 @@
       <div class="success-message" id="successMsg">✓ Configuración aplicada</div>
 
       <div class="info-box">
-        <strong>💡 Atajos:</strong> <code>Ctrl/Cmd + Enter</code> para aplicar • Haz clic en el botón flotante 💬 (esquina inferior derecha) para ver el chatrior derecha.
-        Haz clic en él para abrir el chat y probar la configuración.
+        <strong>💡 Atajos:</strong> <code>Ctrl/Cmd + Enter</code> para aplicar • Haz clic en el botón flotante 💬 (esquina inferior derecha) para ver el chat
       </div>
     </div>
   </div>
@@ -295,21 +294,6 @@
   const resetBtn = document.getElementById('resetBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successMsg = document.getElementById('successMsg');
-
-  // Inicializar con configuración por defecto
-  initializeChatBot(defaultConfig);
-
-  applyBtn.addEventListener('click', () => {
-    const code = configEditor.value;
-    initializeChatBot(code);
-  });
-
-  resetBtn.addEventListener('click', () => {
-    configEditor.value = defaultConfig;
-    initializeChatBot(defaultConfig);
-  });
-
-  // Permitir aplicar con Ctrl+Enter o Cmd+Enter
   const keepOpenCheck = document.getElementById('keepOpenCheck');
 
   // Inicializar con configuración por defecto
@@ -347,23 +331,13 @@
         if (oldChat) oldChat.remove();
       }
 
-      // Extraer el objeto de configuración del código
-      const configMatch = code.match(/ChatBot\.init\s*\(\s*(\{[\s\S]*\})\s*\)/);
-      if (!configMatch) {
-        throw new Error('No se encontró una configuración válida. Asegúrate de usar el formato: ChatBot.init({ ... })');
+      // Validar que el código contenga ChatBot.init
+      if (!code.includes('ChatBot.init')) {
+        throw new Error('El código debe contener ChatBot.init({ ... })');
       }
 
-      // Evaluar la configuración de forma segura
-      const configStr = configMatch[1];
-      const config = eval(`(${configStr})`);
-
-      // Validar que config sea un objeto
-      if (typeof config !== 'object' || config === null) {
-        throw new Error('La configuración debe ser un objeto válido');
-      }
-
-      // Crear nuevo chatbot
-      currentChatBot = ChatBot.init(config);
+      // Ejecutar el código directamente
+      currentChatBot = eval(code);
 
       // Abrir el chat automáticamente si está activada la opción
       if (keepOpenCheck.checked) {
@@ -379,4 +353,15 @@
       successMsg.style.display = 'block';
       setTimeout(() => {
         successMsg.style.display = 'none';
-      }, 2
+      }, 2000);
+
+    } catch (error) {
+      errorMsg.textContent = `❌ Error: ${error.message}`;
+      errorMsg.style.display = 'block';
+      console.error('Error al inicializar el chatbot:', error);
+    }
+  }
+</script>
+
+</body>
+</html>
