@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Chatbot</title>
+</head>
+<body>
+
+<h1>Mi página</h1>
+
+<script src="./sdk/chatbot.js"></script>
+<script>
+  ChatBot.init({
+    title: "Chat de Soporte",
+    subtitle: "Equipo de soporte",
+    botName: "LISA",
+    botAvatar: "https://play-lh.googleusercontent.com/kDuudtNDenxb8k66YGU61mFDGRAsgqish8PFIpLLWRIHagjTKixxjGk5uxQWt50fmgk", // URL de la imagen o null
+    placeholder: "Escribe tu mensaje...",
+    welcomeMessage: "¡Hola! ¿En qué podemos ayudarte hoy?",
+    color: "#2a66f0",
+    apiUrl: "https://tu-api.com/chat",
+    apiKey: "tu-api-key",
+
+    userName: "Daniel García"
+  });
+</script>
+
+</body>
+</html>
