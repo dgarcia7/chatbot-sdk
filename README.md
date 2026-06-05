@@ -669,5 +669,3 @@ Para que el botón de demo funcione en tu repositorio:
    ```
 
 ---
-
-Hecho con ❤️ por [dgarcia7](https://github.com/dgarcia7)
